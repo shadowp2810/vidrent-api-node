@@ -1,9 +1,7 @@
 const _ = require("lodash");
 const bcrypt = require("bcrypt");
-const config = require("config");
 const express = require("express");
 const Joi = require("joi");
-const jwt = require("jsonwebtoken");
 const mongoose = require("mongoose");
 const router = express.Router();
 const { User } = require("../models/user");
@@ -18,7 +16,7 @@ router.post("/", async (req, res) => {
   const validPassword = await bcrypt.compare(req.body.password, user.password);
   if (!validPassword) return res.status(400).send("Invalid email or password.");
 
-  const token = jwt.sign({ _id: user._id }, config.get("jwtPrivateKey"));
+  const token = user.generateAuthToken();
   res.send(token);
 });
 
