@@ -52,7 +52,3 @@ router.get("/:id", async (req, res) => {
 });
 
 module.exports = router;
-
-/*
-mongoimport --db mongo-exercises --collection cources --file exercise-data.json --jsonArray
-*/

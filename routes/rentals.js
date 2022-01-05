@@ -39,7 +39,6 @@ router.post("/", async (req, res) => {
     },
   });
 
-  // Fawn for a group of operations to perform as a unit (Transactions/ 2 Phase Technique)
   try {
     new Fawn.Task()
       .save("rentals", rental)
