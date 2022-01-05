@@ -1,6 +1,8 @@
 const _ = require("lodash");
 const bcrypt = require("bcrypt");
+const config = require("config");
 const express = require("express");
+const jwt = require("jsonwebtoken");
 const router = express.Router();
 const { User, validate } = require("../models/user");
 
@@ -21,7 +23,18 @@ router.post("/", async (req, res) => {
   user.password = await bcrypt.hash(user.password, salt);
   await user.save();
 
-  res.send(_.pick(user, ["_id", "name", "email"]));
+  const token = jwt.sign({ _id: user._id }, config.get("jwtPrivateKey"));
+  res
+    .header("x-auth-token", token)
+    /*
+    If we want client to be able to read this header 
+    we need to set an additional header,
+    which is a standard http header.
+    We add line .header("access-control-expose-headers", "x-auth-token")
+    This header lets webserver whitelist, 
+    that is header browser or server is allowed to access.
+    */
+    .send(_.pick(user, ["_id", "name", "email"]));
 });
 
 module.exports = router;

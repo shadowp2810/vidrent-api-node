@@ -1,4 +1,5 @@
 const app = express();
+const config = require("config");
 const express = require("express");
 const Joi = require("joi");
 Joi.objectId = require("joi-objectid")(Joi);
@@ -9,6 +10,11 @@ const genres = require("./routes/genres");
 const movies = require("./routes/movies");
 const rentals = require("./routes/rentals");
 const users = require("./routes/users");
+
+if (!config.get("jwtPrivateKey")) {
+  console.error("FATAL ERROR: jwtPrivateKey is not defined.");
+  process.exit(1); //0 is success, anything else is failure.
+}
 
 mongoose
   .connect("mongodb://localhost/vidly")
@@ -39,4 +45,6 @@ app.listen(port, () => console.log(`Listening on port ${port}...`));
 + JSON Web Token is a long string that identifies a user. 
   Sent back from server to client after a client makes a login request.
   HEADER.PAYLOAD.VERIFYSIGNATURE , Payload contains public properties about user.
++ We set environemnt variable in terminal, 
+  export vidly_PrivateKey=mySecureKey
 */
