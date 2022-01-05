@@ -36,5 +36,7 @@ app.listen(port, () => console.log(`Listening on port ${port}...`));
     Mongoose is an abstraction over mongoDB driver. 
     Can use joi-objectid to validate client _id inputs to avoid promise rejection.
 + Lodash is an optimized version of underscore, and has a lot of utility functions for working with objects, strings, arrays..
-
++ JSON Web Token is a long string that identifies a user. 
+  Sent back from server to client after a client makes a login request.
+  HEADER.PAYLOAD.VERIFYSIGNATURE , Payload contains public properties about user.
 */
