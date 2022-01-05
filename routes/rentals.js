@@ -1,8 +1,12 @@
-const { Rental, validate } = require("../models/rental");
-const { Movie } = require("../models/movie");
 const { Customer } = require("../models/customer");
+const { Movie } = require("../models/movie");
+const { Rental, validate } = require("../models/rental");
+const mongoose = require("mongoose");
 const express = require("express");
+const Fawn = require("fawn");
 const router = express.Router();
+
+Fawn.init(mongoose);
 
 router.get("/", async (req, res) => {
   const rentals = await Rental.find().sort("-dateOut"); //Sort by dateOut decending
@@ -35,12 +39,23 @@ router.post("/", async (req, res) => {
     },
   });
 
-  rental = await rental.save();
+  // Fawn for a group of operations to perform as a unit (Transactions/ 2 Phase Technique)
+  try {
+    new Fawn.Task()
+      .save("rentals", rental)
+      .update(
+        "movies",
+        { _id: movie._id },
+        {
+          $inc: { numberInStock: -1 },
+        }
+      )
+      .run();
 
-  movie.numberInStock--;
-  movie.save();
-
-  res.send(rental);
+    res.send(rental);
+  } catch (ex) {
+    res.status(500).send("Something failed.");
+  }
 });
 
 router.get("/:id", async (req, res) => {
