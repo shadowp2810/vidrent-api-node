@@ -47,4 +47,9 @@ app.listen(port, () => console.log(`Listening on port ${port}...`));
   HEADER.PAYLOAD.VERIFYSIGNATURE , Payload contains public properties about user.
 + We set environemnt variable in terminal, 
   export vidly_PrivateKey=mySecureKey
++ We use the OOP Information Expert Principle which means an object that has enough information 
+  and is an expert in that area, should be responsible for making decisions and performing tasks.
+  So we encapsule the token logic in the mongoose models.
++ In middlewear functions we either terminate reqest response life cycle 
+  or pass control to next middlewear function in our request process pipeline.
 */
