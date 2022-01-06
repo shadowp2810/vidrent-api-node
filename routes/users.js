@@ -1,9 +1,8 @@
 const _ = require("lodash");
 const bcrypt = require("bcrypt");
-const config = require("config");
 const express = require("express");
-const jwt = require("jsonwebtoken");
 const router = express.Router();
+const auth = require("../middleware/auth");
 const { User, validate } = require("../models/user");
 
 router.get("/me", auth, async (req, res) => {

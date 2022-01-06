@@ -1,19 +1,20 @@
+const express = require("express");
+const Fawn = require("fawn");
+const mongoose = require("mongoose");
+const router = express.Router();
+const auth = require("../middleware/auth");
 const { Customer } = require("../models/customer");
 const { Movie } = require("../models/movie");
 const { Rental, validate } = require("../models/rental");
-const mongoose = require("mongoose");
-const express = require("express");
-const Fawn = require("fawn");
-const router = express.Router();
 
 Fawn.init(mongoose);
 
-router.get("/", async (req, res) => {
+router.get("/", auth, async (req, res) => {
   const rentals = await Rental.find().sort("-dateOut"); //Sort by dateOut decending
   res.send(rentals);
 });
 
-router.post("/", async (req, res) => {
+router.post("/", auth, async (req, res) => {
   const { error } = validate(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 
@@ -57,7 +58,7 @@ router.post("/", async (req, res) => {
   }
 });
 
-router.get("/:id", async (req, res) => {
+router.get("/:id", auth, async (req, res) => {
   const rental = await Rental.findById(req.params.id);
 
   if (!rental)

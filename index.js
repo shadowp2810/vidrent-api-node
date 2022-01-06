@@ -52,4 +52,5 @@ app.listen(port, () => console.log(`Listening on port ${port}...`));
   So we encapsule the token logic in the mongoose models.
 + In middlewear functions we either terminate reqest response life cycle 
   or pass control to next middlewear function in our request process pipeline.
++ We want to apply the middleware function selectively to certain endpoints.
 */
