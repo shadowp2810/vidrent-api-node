@@ -6,6 +6,11 @@ const mongoose = require("mongoose");
 const router = express.Router();
 const { User } = require("../models/user");
 
+/*
+Route for authenticating users. 
+For Logging out we don't need another route 
+and on client side we simply delete the token.  
+*/
 router.post("/", async (req, res) => {
   const { error } = validate(req.body);
   if (error) return res.status(400).send(error.details[0].message);

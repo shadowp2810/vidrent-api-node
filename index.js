@@ -53,4 +53,6 @@ app.listen(port, () => console.log(`Listening on port ${port}...`));
 + In middlewear functions we either terminate reqest response life cycle 
   or pass control to next middlewear function in our request process pipeline.
 + We want to apply the middleware function selectively to certain endpoints.
++ We have a route for authnticating users, for Logging out we don't need another route 
+  and on client side we simply delete the token. Never store tokens in a database, and if you are hash it and use https. 
 */
