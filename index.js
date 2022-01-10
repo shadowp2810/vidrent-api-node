@@ -1,3 +1,4 @@
+require("express-async-errors");
 const app = express();
 const config = require("config");
 const express = require("express");
@@ -5,15 +6,19 @@ const Joi = require("joi");
 Joi.objectId = require("joi-objectid")(Joi);
 const mongoose = require("mongoose");
 const winston = require("winston");
+require("winston-mongodb");
 const auth = require("./routes/auth");
 const customers = require("./routes/customers");
 const genres = require("./routes/genres");
 const movies = require("./routes/movies");
 const rentals = require("./routes/rentals");
 const users = require("./routes/users");
-require("express-async-errors");
 
 winston.add(winston.transports.File, { filename: "logfile.log" });
+winston.add(winston.transports.MongoDB, {
+  db: "mongodb://localhost/vidly",
+  level: "error",
+});
 
 if (!config.get("jwtPrivateKey")) {
   console.error("FATAL ERROR: jwtPrivateKey is not defined.");
@@ -65,4 +70,5 @@ app.listen(port, () => console.log(`Listening on port ${port}...`));
   and on client side we simply delete the token. Never store tokens in a database, and if you are hash it and use https. 
 + We use another middleware admin for role based authorization.
 + We need to handle rejected promises if our mongodb server can't be accessed. 
++ In a real world scenario you want to use a different database to log errors, here we log to same database. 
 */
