@@ -29,6 +29,10 @@ app.use("/api/rentals", rentals);
 app.use("/api/users", users);
 app.use("/api/auth", auth);
 
+app.use(function (err, req, res, next) {
+  res.status(500).send("Something failed");
+});
+
 const port = process.env.PORT || 3000;
 app.listen(port, () => console.log(`Listening on port ${port}...`));
 
@@ -56,4 +60,5 @@ app.listen(port, () => console.log(`Listening on port ${port}...`));
 + We have a route for authnticating users, for Logging out we don't need another route 
   and on client side we simply delete the token. Never store tokens in a database, and if you are hash it and use https. 
 + We use another middleware admin for role based authorization.
++ We need to handle rejected promises if our mongodb server can't be accessed. 
 */
