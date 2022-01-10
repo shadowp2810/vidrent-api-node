@@ -1,20 +1,15 @@
-const config = require("config");
-const Joi = require("joi");
-Joi.objectId = require("joi-objectid")(Joi);
+const winston = require("winston");
 const express = require("express");
 const app = express();
 
 require("./startup/db");
 require("./startup/routes")(app);
 require("./startup/db")();
-
-if (!config.get("jwtPrivateKey")) {
-  console.error("FATAL ERROR: jwtPrivateKey is not defined.");
-  process.exit(1); //0 is success, anything else is failure.
-}
+require("./startup/config")();
+require("./startup/validation")();
 
 const port = process.env.PORT || 3000;
-app.listen(port, () => console.log(`Listening on port ${port}...`));
+app.listen(port, () => winston.info(`Listening on port ${port}...`));
 
 /*
 + mongoimport --db mongo-exercises --collection cources --file exercise-data.json --jsonArray
@@ -46,4 +41,5 @@ app.listen(port, () => console.log(`Listening on port ${port}...`));
   we should terminate the process, because it can be in an unclean state,
   so we restart it with a clean state. In production we use tools called process managers,
   which are responsible for automatically restarting a node process.
++ It is a best practice to throw error objects instead of strings because a stack trace will be avaiable.
 */
