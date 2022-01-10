@@ -14,9 +14,12 @@ const movies = require("./routes/movies");
 const rentals = require("./routes/rentals");
 const users = require("./routes/users");
 
-process.on("uncaughtException", (ex) => {
-  console.log("WE GOT AN UNCAUGHT EXCEPTION");
-  winston.error(ex.message, ex);
+winston.exceptions.handle(
+  new winston.transports.File({ filename: "uncaughtExceptions.log" })
+);
+
+process.on("unhandledRejection", (ex) => {
+  throw ex;
 });
 
 winston.add(winston.transports.File, { filename: "logfile.log" });
