@@ -1,18 +1,14 @@
 require("express-async-errors");
-const app = express();
+const winston = require("winston");
+require("winston-mongodb");
 const config = require("config");
-const express = require("express");
 const Joi = require("joi");
 Joi.objectId = require("joi-objectid")(Joi);
 const mongoose = require("mongoose");
-const winston = require("winston");
-require("winston-mongodb");
-const auth = require("./routes/auth");
-const customers = require("./routes/customers");
-const genres = require("./routes/genres");
-const movies = require("./routes/movies");
-const rentals = require("./routes/rentals");
-const users = require("./routes/users");
+const express = require("express");
+const app = express();
+
+require("./startup/routes")(app);
 
 winston.exceptions.handle(
   new winston.transports.File({ filename: "uncaughtExceptions.log" })
@@ -37,18 +33,6 @@ mongoose
   .connect("mongodb://localhost/vidly")
   .then(() => console.log("Connected to MongoDB..."))
   .catch((err) => console.error("Could not connect to MongoDB..."));
-
-app.use(express.json());
-app.use("/api/genres", genres);
-app.use("/api/customers", customers);
-app.use("/api/movies", movies);
-app.use("/api/rentals", rentals);
-app.use("/api/users", users);
-app.use("/api/auth", auth);
-
-app.use(function (err, req, res, next) {
-  res.status(500).send("Something failed");
-});
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => console.log(`Listening on port ${port}...`));
@@ -79,4 +63,8 @@ app.listen(port, () => console.log(`Listening on port ${port}...`));
 + We use another middleware admin for role based authorization.
 + We need to handle rejected promises if our mongodb server can't be accessed. 
 + In a real world scenario you want to use a different database to log errors, here we log to same database. 
++ As a best practice when dealing with uncaught exceptions or unhandled rejections,
+  we should terminate the process, because it can be in an unclean state,
+  so we restart it with a clean state. In production we use tools called process managers,
+  which are responsible for automatically restarting a node process.
 */
