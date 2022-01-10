@@ -10,6 +10,7 @@ const genres = require("./routes/genres");
 const movies = require("./routes/movies");
 const rentals = require("./routes/rentals");
 const users = require("./routes/users");
+require("express-async-errors");
 
 if (!config.get("jwtPrivateKey")) {
   console.error("FATAL ERROR: jwtPrivateKey is not defined.");

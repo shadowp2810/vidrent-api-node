@@ -7,3 +7,6 @@ module.exports = function (handler) {
     }
   };
 };
+
+// if express-async-errors does not work
+// const asyncMiddleware = require("../middleware/async");
