@@ -7,6 +7,7 @@ require("./startup/routes")(app);
 require("./startup/db")();
 require("./startup/config")();
 require("./startup/validation")();
+require("./startup/prod")(app);
 
 const port = process.env.PORT || 3000;
 const server = app.listen(port, () =>
@@ -54,5 +55,6 @@ module.exports = server;
 + OOP we have statice and instance methods.
   static methods are available directly on class, used when not working with particular object.
   instance method is available on object or instance of class.
-  
++ helmet is a middleware package that can protect application from well known vulnerabilities.
++ compression to compress http response sent to client.
 */
