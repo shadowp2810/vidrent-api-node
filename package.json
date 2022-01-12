@@ -8,7 +8,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest --watchAll"
+    "test": "jest --watchAll -verbose"
   },
   "author": "",
   "license": "ISC",
