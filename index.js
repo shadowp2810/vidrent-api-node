@@ -42,4 +42,6 @@ app.listen(port, () => winston.info(`Listening on port ${port}...`));
   so we restart it with a clean state. In production we use tools called process managers,
   which are responsible for automatically restarting a node process.
 + It is a best practice to throw error objects instead of strings because a stack trace will be avaiable.
++ A test framework gives us a library of utitlity functions which we use to write tests and also a test runner for command line.
++ npm i jest --save-dev , as it is a development dependency and we don't want to deploy to production bundle.
 */
