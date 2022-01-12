@@ -9,8 +9,11 @@ require("./startup/config")();
 require("./startup/validation")();
 
 const port = process.env.PORT || 3000;
-app.listen(port, () => winston.info(`Listening on port ${port}...`));
+const server = app.listen(port, () =>
+  winston.info(`Listening on port ${port}...`)
+);
 
+module.exports = server;
 /*
 + mongoimport --db mongo-exercises --collection cources --file exercise-data.json --jsonArray
 + Fawn for a group of operations to perform as a unit (Transactions/ 2 Phase Technique)
@@ -44,4 +47,5 @@ app.listen(port, () => winston.info(`Listening on port ${port}...`));
 + It is a best practice to throw error objects instead of strings because a stack trace will be avaiable.
 + A test framework gives us a library of utitlity functions which we use to write tests and also a test runner for command line.
 + npm i jest --save-dev , as it is a development dependency and we don't want to deploy to production bundle.
++ npm i supertest --save-dev , With supertests we can send http requests to our endpoint just like with postman.
 */
