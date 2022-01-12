@@ -121,4 +121,11 @@ describe("/api/returns", () => {
     const rentalInDb = await Rental.findById(rental._id);
     expect(rentalInDb.rentalFee).toBe(14);
   });
+
+  it("should increase the movie stock if input is valid", async () => {
+    const res = await exec();
+
+    const movieInDb = await Movie.findById(movieId);
+    expect(movieInDb.numberInStock).toBe(movie.numberInStock + 1);
+  });
 });
