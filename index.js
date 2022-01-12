@@ -48,4 +48,5 @@ module.exports = server;
 + A test framework gives us a library of utitlity functions which we use to write tests and also a test runner for command line.
 + npm i jest --save-dev , as it is a development dependency and we don't want to deploy to production bundle.
 + npm i supertest --save-dev , With supertests we can send http requests to our endpoint just like with postman.
++ With automated tests we can refractor code with confidence.
 */
