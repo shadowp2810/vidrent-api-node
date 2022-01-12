@@ -1,6 +1,6 @@
 const request = require("supertest");
-const { Genre } = require("../../models/genre");
-const { User } = require("../../models/user");
+const { Genre } = require("../../../models/genre");
+const { User } = require("../../../models/user");
 const mongoose = require("mongoose");
 
 let server;
@@ -9,7 +9,7 @@ let server;
 //as first time we run it will be on port 3000 and rerunning will be on same port so we get an exception.
 describe("/api/genres", () => {
   beforeEach(() => {
-    server = require("../../index");
+    server = require("../../../index");
   });
   afterEach(async () => {
     await server.close();
