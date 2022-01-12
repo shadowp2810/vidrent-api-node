@@ -50,4 +50,5 @@ module.exports = server;
 + npm i supertest --save-dev , With supertests we can send http requests to our endpoint just like with postman.
 + With automated tests we can refractor code with confidence.
 + Number of tests should be greater than or equal execution paths.
++ jest --coverage to see code that is not covered by tests.
 */
