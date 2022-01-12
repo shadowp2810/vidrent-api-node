@@ -49,4 +49,5 @@ module.exports = server;
 + npm i jest --save-dev , as it is a development dependency and we don't want to deploy to production bundle.
 + npm i supertest --save-dev , With supertests we can send http requests to our endpoint just like with postman.
 + With automated tests we can refractor code with confidence.
++ Number of tests should be greater than or equal execution paths.
 */
