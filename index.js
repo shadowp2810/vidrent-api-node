@@ -51,4 +51,8 @@ module.exports = server;
 + With automated tests we can refractor code with confidence.
 + Number of tests should be greater than or equal execution paths.
 + jest --coverage to see code that is not covered by tests.
++ OOP we have statice and instance methods.
+  static methods are available directly on class, used when not working with particular object.
+  instance method is available on object or instance of class.
+  
 */
